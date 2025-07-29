@@ -1,0 +1,20 @@
+# === Testing Tools ===
+pytest                # Python testing framework
+pytest-asyncio        # Async support for pytest
+httpx                 # Async HTTP client for testing APIs
+faker                 # Fake data generator for tests
+
+# === Web Frameworks ===
+fastapi               # Modern web framework
+uvicorn               # ASGI server to run FastAPI apps
+
+# === Database ===
+pymongo               # MongoDB driver
+motor                 # Async MongoDB driver
+
+# === GraphQL ===
+graphene              # GraphQL framework for Python
+starlette             # ASGI toolkit (FastAPI dependency)
+
+# === Optional Dev Tools ===
+ipython               # Interactive Python shell
