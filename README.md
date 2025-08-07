@@ -4,7 +4,7 @@
 
 This bootcamp is for test engineers looking to master API/backend testing using Python, FastAPI, MongoDB, GraphQL, and modern CI/CD tooling — fully containerized via GitHub Codespaces.
 
-> 👨‍💻 Everything runs in GitHub Codespaces using Dev Containers. No local setup required.
+> 👨‍💻 All development is done inside GitHub Codespaces using Dev Containers. No local setup required.
 
 ---
 
@@ -14,9 +14,11 @@ This bootcamp is for test engineers looking to master API/backend testing using 
 
 ### ✅ Day 1: Codespaces Setup + FastAPI + DevContainer + Pytest
 
-1. **Create GitHub repo**: `python-testing-bootcamp`
-2. **Open with GitHub Codespaces**
-3. **Create `.devcontainer/devcontainer.json`**:
+**What you learn**: How to create a cloud-based Python dev environment, set up FastAPI and run automated tests using pytest.
+
+**Steps**:
+1. Create a new GitHub repo and launch Codespaces to enable cloud dev environment.
+2. Define your environment using `.devcontainer/devcontainer.json` to include Python, pytest, and Docker:
    ```json
    {
      "name": "Python Testing Env",
@@ -33,7 +35,7 @@ This bootcamp is for test engineers looking to master API/backend testing using 
    }
 ````
 
-4. **Create `requirements.txt`** and paste:
+3. Create `requirements.txt`:
 
    ```
    fastapi
@@ -46,13 +48,13 @@ This bootcamp is for test engineers looking to master API/backend testing using 
    motor
    graphene
    ```
-5. **Set up folders**:
+4. Set up your folder structure:
 
    ```bash
    mkdir src tests data
    touch src/main.py tests/test_dummy.py README.md
    ```
-6. **Create root route in `main.py`**:
+5. Create a root route in `src/main.py`:
 
    ```python
    from fastapi import FastAPI
@@ -62,33 +64,39 @@ This bootcamp is for test engineers looking to master API/backend testing using 
    def root():
        return {"message": "API is running"}
    ```
-7. **Run server**:
+6. Run your FastAPI server:
 
    ```bash
    uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
    ```
-8. **Test root with curl**:
+7. Test using curl:
 
    ```bash
    curl http://localhost:8000/
    ```
-9. **Create test in `tests/test_dummy.py`**:
+8. Add a simple test in `tests/test_dummy.py`:
 
    ```python
    def test_always_passes():
        assert True
    ```
-10. **Run tests**:
+9. Run tests:
 
-```bash
-pytest
-```
+   ```bash
+   pytest
+   ```
+
+✅ **Outcome**: You now have a working containerized Python environment, a FastAPI app, and a test running in GitHub Codespaces.
 
 ---
 
 ### ✅ Day 2: Python Logic + Unit Tests
 
-1. **Create `src/day2_basics.py`** with:
+**What you learn**: How to write core Python functions and test them using pytest.
+
+**Steps**:
+
+1. Create `src/day2_basics.py`:
 
    ```python
    def greet(name: str): return f"Hello, {name}"
@@ -100,7 +108,7 @@ pytest
        for i in range(2, n + 1): result *= i
        return result
    ```
-2. **Create `tests/test_day2_basics.py`**:
+2. Create `tests/test_day2_basics.py`:
 
    ```python
    from src.day2_basics import *
@@ -110,17 +118,23 @@ pytest
    def test_is_even(): assert is_even(2); assert not is_even(3)
    def test_factorial(): assert factorial(5) == 120
    ```
-3. **Run tests**:
+3. Run the tests:
 
    ```bash
    pytest -v
    ```
 
+✅ **Outcome**: You now understand how to write logic functions and create simple unit tests for each.
+
 ---
 
 ### ✅ Day 3: Pytest Fixtures + Parametrization
 
-1. **Create `pytest.ini`**:
+**What you learn**: How to structure and reuse test data using fixtures and parametrize tests with multiple input values.
+
+**Steps**:
+
+1. Create `pytest.ini`:
 
    ```ini
    [pytest]
@@ -128,7 +142,7 @@ pytest
    testpaths = tests
    python_files = test_*.py
    ```
-2. **Create `tests/conftest.py`** with a fixture:
+2. Create `tests/conftest.py` with a reusable fixture:
 
    ```python
    import pytest
@@ -137,13 +151,13 @@ pytest
    def sample_user():
        return {"id": 1, "username": "tester", "role": "admin"}
    ```
-3. **Use fixture in `tests/test_users.py`**:
+3. Create `tests/test_users.py` to use the fixture:
 
    ```python
    def test_user_role(sample_user):
        assert sample_user["role"] == "admin"
    ```
-4. **Add parametrized test in `tests/test_math_ops.py`**:
+4. Create `tests/test_math_ops.py` with parameterized tests:
 
    ```python
    import pytest
@@ -153,17 +167,23 @@ pytest
    def test_multiply_params(a, b, result):
        assert multiply(a, b) == result
    ```
-5. **Run all tests**:
+5. Run all tests:
 
    ```bash
    pytest
    ```
 
+✅ **Outcome**: You now have dynamic and reusable test cases using fixtures and parameterization.
+
 ---
 
 ### ✅ Day 4: FastAPI POST API + curl + TestClient
 
-1. **Edit `src/main.py`** to add item creation:
+**What you learn**: How to build and test a FastAPI POST endpoint with JSON input using both curl and TestClient.
+
+**Steps**:
+
+1. Modify `src/main.py` to include a POST route:
 
    ```python
    from pydantic import BaseModel
@@ -176,14 +196,14 @@ pytest
    def create_item(item: Item):
        return {"message": f"Item '{item.name}' added successfully.", "price": item.price}
    ```
-2. **Test with curl**:
+2. Test it with curl:
 
    ```bash
    curl -X POST http://localhost:8000/items \
      -H "Content-Type: application/json" \
      -d '{"name": "Monitor", "price": 299.99}'
    ```
-3. **Create `tests/test_items_api.py`**:
+3. Add automated test in `tests/test_items_api.py`:
 
    ```python
    from fastapi.testclient import TestClient
@@ -196,32 +216,37 @@ pytest
        assert response.status_code == 200
        assert "message" in response.json()
    ```
-4. **Run tests**:
+4. Run your tests:
 
    ```bash
    pytest
    ```
 
+✅ **Outcome**: You’ve created and tested your first POST API using both manual (curl) and automated (pytest) tools.
+
 ---
 
 ### ✅ Day 5: MongoDB Integration + Seeding + Async API Test
 
-1. **Start MongoDB container**:
+**What you learn**: How to connect FastAPI to MongoDB using `motor`, seed data, and write async tests using `httpx`.
+
+**Steps**:
+
+1. Run MongoDB container:
 
    ```bash
    docker run -d --name mongo -p 27017:27017 mongo
    ```
-
-2. **Connect MongoDB in `src/main.py`**:
+2. Update `main.py` to connect MongoDB:
 
    ```python
    import motor.motor_asyncio
+
    client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
    db = client.testing_db
    products_collection = db.products
    ```
-
-3. **Add `/products` endpoints**:
+3. Add product endpoints:
 
    ```python
    @app.post("/products")
@@ -238,8 +263,7 @@ pytest
            products.append(product)
        return products
    ```
-
-4. **Create `data/seed.py`**:
+4. Create `data/seed.py`:
 
    ```python
    import asyncio
@@ -252,16 +276,16 @@ pytest
            {"name": "Laptop", "price": 999.99},
            {"name": "Mouse", "price": 29.99}
        ])
+
    asyncio.run(seed())
    ```
 
-   Run:
+   Run it:
 
    ```bash
    python data/seed.py
    ```
-
-5. **Create `tests/test_products_api.py`**:
+5. Add async test in `tests/test_products_api.py`:
 
    ```python
    import pytest
@@ -273,22 +297,40 @@ pytest
            response = await client.post("/products", json={"name": "Monitor", "price": 299.99})
        assert response.status_code == 200
    ```
-
-6. **Start FastAPI app** (in a second terminal):
+6. Start your server:
 
    ```bash
    uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
    ```
-
-7. **Run tests**:
+7. Run tests:
 
    ```bash
    pytest
    ```
 
+✅ **Outcome**: You’ve connected to a real database, seeded data, and performed async testing on your endpoints.
+
 ---
 
-## 📁 Project Structure
+## 🧠 Summary of Week 1
+
+By the end of Week 1, you will have:
+
+* 🧰 A fully working Codespaces environment
+* 🔍 Solid understanding of Python logic testing using pytest
+* 🚀 Deployed and tested FastAPI endpoints with both sync and async flows
+* 🛢️ MongoDB connected, seeded, and tested
+* 🧪 Full coverage of test-driven API development foundations
+
+---
+
+## 🔜 Coming Up Next...
+
+**Day 6**: Add a GraphQL endpoint with Strawberry + MongoDB querying
+
+---
+
+## 🗂️ Project Structure
 
 ```
 .
@@ -297,6 +339,7 @@ pytest
 ├── src/
 │   └── main.py
 ├── tests/
+│   ├── test_dummy.py
 │   ├── test_day2_basics.py
 │   ├── test_math_ops.py
 │   ├── test_items_api.py
@@ -312,26 +355,9 @@ pytest
 
 ---
 
-## ✅ Week 1 Outcome
-
-* ✅ Fully reproducible Python/Testing environment using Codespaces
-* ✅ Pytest for logic testing, fixtures, parametrized tests
-* ✅ FastAPI API routes + testing with `TestClient`
-* ✅ MongoDB async backend + data seeding + real async testing
-
----
-
-## 🔜 Next: Day 6 – GraphQL with Strawberry + MongoDB Querying
-
----
-
 ## 🤝 Contributors & Support
 
 This curriculum is maintained for educational use. PRs welcome!
 
 Happy testing! 🚀
-
-```
-
----
 
