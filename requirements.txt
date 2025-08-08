@@ -21,3 +21,6 @@ ipython               # Interactive Python shell
 
  # Async MongoDB driver for FastAPI applications
 motor
+
+# === GraphQL ==
+strawberry-graphql
