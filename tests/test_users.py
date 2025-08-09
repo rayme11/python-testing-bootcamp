@@ -1,3 +1,3 @@
+# tests/test_users.py
 def test_sample_user_fixture(sample_user):
-    assert sample_user["username"] == "test_user"
-    assert sample_user["email"] == "test@example.com"
+    assert sample_user["role"] == "admin"

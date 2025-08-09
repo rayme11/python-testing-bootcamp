@@ -1,24 +1,38 @@
-Here is the full `README.md` with everything we've done so far — fully copy-pasteable:
+Alright — here’s the **complete README.md** from **Day 1 through Day 8**, rebuilt so it’s a *teaching + doing* guide.
+You can paste this into your repo and it will have **objectives, concepts, steps, and outcomes** for every day.
 
 ---
 
 ````markdown
-# 🧪 Python Testing Bootcamp in GitHub Codespaces
+# Python Testing Bootcamp – Full Learning Log (Day 1–8)
 
-Welcome to a 3-month guided bootcamp to become a mid-to-senior-level test engineer using Python, FastAPI, MongoDB, GraphQL, and modern testing tools — all inside **GitHub Codespaces**. This README covers your full journey, step by step.
+This bootcamp takes you from **Python testing basics** to building a **fully tested FastAPI app with MongoDB and GraphQL** in GitHub Codespaces.
+
+Each day includes:
+
+- **🎯 Objective** – what you’re learning
+- **📚 Concepts Covered** – theory you’ll touch
+- **🛠 Steps** – commands and code
+- **✅ Outcome** – what you’ll have working at the end
 
 ---
 
-## 🗓️ WEEK 1: Environment, Python, Testing Basics
+## 📅 Day 1 – GitHub Codespaces Environment Setup
 
----
+**🎯 Objective:**  
+Create a reproducible cloud development environment that includes Python, FastAPI, MongoDB, and testing tools.
 
-### ✅ Day 1: Setting Up the Environment in GitHub Codespaces
+**📚 Concepts Covered:**
+- GitHub Codespaces & Dev Containers
+- Python environment setup
+- Installing project dependencies automatically
+- Forwarding ports for API access
+- Auto-starting MongoDB
 
-1. **Create GitHub Repo** (e.g., `python-testing-bootcamp`)
-2. **Enable Codespaces** via the green `<> Code` button → "Create codespace on main"
-3. **Add `.devcontainer/devcontainer.json`:**
+**🛠 Steps:**
 
+1. **Create a GitHub repo** → Enable GitHub Codespaces in settings.
+2. **Add `.devcontainer/devcontainer.json`:**
 ```json
 {
   "name": "Python Testing Env",
@@ -36,44 +50,95 @@ Welcome to a 3-month guided bootcamp to become a mid-to-senior-level test engine
 }
 ````
 
-4. **Add `requirements.txt`:**
+3. **Add `requirements.txt`:**
 
-```txt
+```
 fastapi
 uvicorn
+pytest
+requests
 pymongo
 motor
-httpx
-pytest
-pytest-asyncio
 strawberry-graphql
+httpx
+pytest-asyncio
+faker
 ```
 
-5. **Add `README.md`** (you’re reading it!)
-6. **Create folder structure:**
+4. **Create folder structure:**
 
-```bash
-mkdir src tests
-touch src/main.py
 ```
+.devcontainer/
+src/
+tests/
+data/
+README.md
+requirements.txt
+```
+
+5. Commit & push → open Codespace → wait for build.
+
+**✅ Outcome:**
+A Codespaces dev environment that runs Python, auto-installs dependencies, starts MongoDB, and forwards port `8000` for API testing.
 
 ---
 
-### ✅ Day 2: Python Refresher
+## 📅 Day 2 – Python Basics Refresher
 
-* Write simple Python functions in `src/day2_basics.py`
-* Create `tests/test_day2_basics.py` to test them using `pytest`
-* Run tests:
+**🎯 Objective:**
+Review Python fundamentals you’ll use for testing.
+
+**📚 Concepts Covered:**
+
+* Functions & return values
+* Parametrized tests
+* `pytest` basics
+
+**🛠 Steps:**
+
+1. **Create `src/day2_basics.py`:**
+
+```python
+def multiply(a, b):
+    return a * b
+```
+
+2. **Create `tests/test_math_ops.py`:**
+
+```python
+import pytest
+from src.day2_basics import multiply
+
+@pytest.mark.parametrize("a,b,result", [(2,2,4), (3,3,9)])
+def test_multiply_param(a, b, result):
+    assert multiply(a, b) == result
+```
+
+3. Run tests:
 
 ```bash
-pytest
+pytest -q
 ```
+
+**✅ Outcome:**
+You can run Python code + tests in Codespaces and see passing results.
 
 ---
 
-### ✅ Day 3: Pytest Essentials
+## 📅 Day 3 – Pytest Fundamentals
 
-* Create a `pytest.ini` to organize tests:
+**🎯 Objective:**
+Learn core `pytest` features and test organization.
+
+**📚 Concepts Covered:**
+
+* Test discovery rules
+* Fixtures for reusable setup
+* Assertions
+
+**🛠 Steps:**
+
+1. **Add `pytest.ini`:**
 
 ```ini
 [pytest]
@@ -81,21 +146,64 @@ testpaths = tests
 python_files = test_*.py
 ```
 
-* Use `fixtures`, `assert`, and parametrize
-* Example fixture in `conftest.py`
+2. Run:
+
+```bash
+pytest -q
+```
+
+**✅ Outcome:**
+Your test folder is automatically discovered, and `pytest` knows where to look.
 
 ---
 
-### ✅ Day 4: Build Your FastAPI App
+## 📅 Day 4 – Project Structure
 
-In `src/main.py`:
+**🎯 Objective:**
+Make the app importable and ready for modular testing.
+
+**📚 Concepts Covered:**
+
+* Python packages (`__init__.py`)
+* Organizing code for tests
+
+**🛠 Steps:**
+
+```bash
+touch src/__init__.py
+```
+
+**✅ Outcome:**
+Your `src` code can now be imported in tests.
+
+---
+
+## 📅 Day 5 – FastAPI REST API
+
+**🎯 Objective:**
+Create a FastAPI app with `/products` REST endpoints.
+
+**📚 Concepts Covered:**
+
+* FastAPI basics
+* Async MongoDB with `motor`
+* REST endpoints
+
+**🛠 Steps:**
+
+`src/main.py`:
 
 ```python
 from fastapi import FastAPI
 from pydantic import BaseModel
 import motor.motor_asyncio
 
+import strawberry
+from strawberry.fastapi import GraphQLRouter
+from typing import List
+
 app = FastAPI()
+
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 db = client.testing_db
 products_collection = db.products
@@ -112,31 +220,71 @@ class Product(BaseModel):
 async def create_product(product: Product):
     new_product = product.model_dump()
     result = await products_collection.insert_one(new_product)
-    return {
-        "message": "Product added",
-        "id": str(result.inserted_id)
-    }
+    return {"message": "Product added", "id": str(result.inserted_id)}
 
 @app.get("/products")
 async def list_products():
-    products = []
-    async for product in products_collection.find():
-        product["_id"] = str(product["_id"])
-        products.append(product)
-    return products
+    items = []
+    async for doc in products_collection.find():
+        doc["_id"] = str(doc["_id"])
+        items.append(doc)
+    return items
+
+@strawberry.type
+class ProductType:
+    name: str
+    price: float
+
+@strawberry.input
+class ProductInput:
+    name: str
+    price: float
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    async def all_products(self) -> List[ProductType]:
+        results = []
+        async for doc in products_collection.find():
+            results.append(ProductType(name=doc["name"], price=doc["price"]))
+        return results
+
+@strawberry.type
+class Mutation:
+    @strawberry.mutation
+    async def add_product(self, product: ProductInput) -> str:
+        await products_collection.insert_one({"name": product.name, "price": product.price})
+        return f"Product '{product.name}' added."
+
+schema = strawberry.Schema(query=Query, mutation=Mutation)
+graphql_app = GraphQLRouter(schema)
+app.include_router(graphql_app, prefix="/graphql")
 ```
 
-* Run server:
+Run:
 
 ```bash
 uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+**✅ Outcome:**
+You now have a REST + GraphQL API running inside Codespaces.
+
 ---
 
-### ✅ Day 5: Write API Tests
+## 📅 Day 6 – Testing REST Endpoints
 
-In `tests/test_products_api.py`:
+**🎯 Objective:**
+Write tests for `/products` endpoints.
+
+**📚 Concepts Covered:**
+
+* FastAPI’s `TestClient`
+* Testing POST & GET endpoints
+
+**🛠 Steps:**
+
+`tests/test_products_api.py`:
 
 ```python
 from fastapi.testclient import TestClient
@@ -147,7 +295,9 @@ client = TestClient(app)
 def test_create_product():
     response = client.post("/products", json={"name": "Monitor", "price": 299.99})
     assert response.status_code == 200
-    assert "id" in response.json()
+    data = response.json()
+    assert data["message"] == "Product added"
+    assert "id" in data
 
 def test_list_products():
     response = client.get("/products")
@@ -155,125 +305,135 @@ def test_list_products():
     assert isinstance(response.json(), list)
 ```
 
-* Run with:
+Run:
 
 ```bash
-pytest
+pytest -q
 ```
+
+**✅ Outcome:**
+You can programmatically test REST endpoints.
 
 ---
 
-### ✅ Day 6: Add GraphQL to FastAPI
+## 📅 Day 7 – Fixtures & MongoDB Seed Data
 
-Install Strawberry GraphQL (already in requirements.txt).
+**🎯 Objective:**
+Use pytest fixtures to auto-seed and clean test data.
 
-Update `src/main.py`:
+**📚 Concepts Covered:**
+
+* Autouse fixtures
+* Async DB setup/teardown
+
+**🛠 Steps:**
+
+`tests/conftest.py`:
 
 ```python
-import strawberry
-from strawberry.fastapi import GraphQLRouter
+import pytest
+import motor.motor_asyncio
 
-@strawberry.type
-class ProductType:
-    name: str
-    price: float
+@pytest.fixture
+def sample_user():
+    return {"id": 1, "username": "tester", "role": "admin"}
 
-@strawberry.type
-class Query:
-    @strawberry.field
-    async def all_products(self) -> list[ProductType]:
-        products = []
-        async for product in products_collection.find():
-            products.append(ProductType(name=product["name"], price=product["price"]))
-        return products
-
-@strawberry.type
-class Mutation:
-    @strawberry.mutation
-    async def add_product(self, product: ProductType) -> str:
-        await products_collection.insert_one(product.__dict__)
-        return "Product added"
-
-schema = strawberry.Schema(query=Query, mutation=Mutation)
-graphql_app = GraphQLRouter(schema)
-app.include_router(graphql_app, prefix="/graphql")
+@pytest.fixture(autouse=True)
+async def seed_and_cleanup():
+    client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
+    db = client.testing_db
+    await db.products.delete_many({})
+    await db.products.insert_many([
+        {"name": "Preloaded Item 1", "price": 10.99},
+        {"name": "Preloaded Item 2", "price": 20.50}
+    ])
+    yield
+    await db.products.delete_many({})
 ```
 
-* Visit `/graphql` in Codespaces UI:
-
-  * Example mutation:
-
-```graphql
-mutation {
-  addProduct(product: { name: "Laptop", price: 149.99 })
-}
-```
-
-* Example query:
-
-```graphql
-{
-  allProducts {
-    name
-    price
-  }
-}
-```
+**✅ Outcome:**
+Your DB has known test data before every test run.
 
 ---
 
-## 🛠️ Appendix: Automatically Start MongoDB in Codespaces
+## 📅 Day 8 – Testing GraphQL
 
-To avoid manually starting MongoDB each time your Codespace starts:
+**🎯 Objective:**
+Write automated tests for `/graphql` queries and mutations.
 
-### ✅ Step 1: Add to `postCreateCommand`
+**📚 Concepts Covered:**
 
-Already included:
+* Testing GraphQL queries
+* Sending JSON payloads to `/graphql`
+* Using `pytest-asyncio` with `httpx`
 
-```json
-"postCreateCommand": "pip install -r requirements.txt && sudo mkdir -p /data/db && sudo chown -R $(whoami) /data/db && mongod --dbpath /data/db --bind_ip 127.0.0.1 --port 27017 &"
+**🛠 Steps:**
+
+`tests/test_graphql_api.py`:
+
+```python
+import pytest
+from httpx import AsyncClient
+from src.main import app
+
+@pytest.mark.asyncio
+async def test_add_product_graphql():
+    query = """
+    mutation {
+        addProduct(product: {name: "GraphQL Item", price: 42.0})
+    }
+    """
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.post("/graphql", json={"query": query})
+    assert response.status_code == 200
+    assert "GraphQL Item" in response.text
+
+@pytest.mark.asyncio
+async def test_list_products_graphql():
+    query = """
+    query {
+        allProducts {
+            name
+            price
+        }
+    }
+    """
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        response = await ac.post("/graphql", json={"query": query})
+    assert response.status_code == 200
+    assert "name" in response.text
 ```
+
+Run:
+
+```bash
+pytest -q
+```
+
+**✅ Outcome:**
+You can now fully test GraphQL queries & mutations with Python.
 
 ---
 
-## 🔄 Recommended Automation Improvements
+## 🔄 Developer Automation
 
-### ✅ Forward Ports Automatically
-
-```json
-"forwardPorts": [8000]
-```
-
-### ✅ Add a `Makefile`
+* MongoDB auto-start in Codespaces
+* Port `8000` auto-forward
+* Makefile:
 
 ```make
 run:
 	uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
-
 test:
 	pytest tests/
 ```
 
-### ✅ Add Dev Script
+---
 
-`scripts/start.sh`:
+**Next step → Day 9:** Explore more advanced GraphQL queries, filtering, and test coverage reports.
 
-```bash
-#!/bin/bash
-mongod --dbpath /data/db --bind_ip 127.0.0.1 --port 27017 &
-uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Make executable:
-
-```bash
-chmod +x scripts/start.sh
-```
-
-Then run:
-
-```bash
-./scripts/start.sh
 ```
 
 ---
+
+
