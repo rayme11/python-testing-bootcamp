@@ -24,4 +24,7 @@ motor
 
 # === GraphQL ==
 strawberry-graphql
-
+bson                # BSON support for MongoDB
+strawberry-fastapi  # Strawberry integration with FastAPI
+strawberry           # GraphQL library for Python
+# === Miscellaneous ===

@@ -1,17 +1,20 @@
-# tests/test_products_api.py
-from fastapi.testclient import TestClient
-from src.main import app
+import pytest
+from httpx import AsyncClient
 
-client = TestClient(app)
+BASE = "http://127.0.0.1:8000"
 
-def test_create_product():
-    response = client.post("/products", json={"name": "Monitor", "price": 299.99})
-    assert response.status_code == 200
-    data = response.json()
-    assert data["message"] == "Product added"
-    assert "id" in data
+@pytest.mark.asyncio
+async def test_create_product():
+    async with AsyncClient(base_url=BASE, timeout=10.0) as ac:
+        r = await ac.post("/products", json={"name": "Monitor", "price": 299.99})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["message"] == "Product added"
+    assert "id" in body
 
-def test_list_products():
-    response = client.get("/products")
-    assert response.status_code == 200
-    assert isinstance(response.json(), list)
+@pytest.mark.asyncio
+async def test_list_products():
+    async with AsyncClient(base_url=BASE, timeout=10.0) as ac:
+        r = await ac.get("/products")
+    assert r.status_code == 200, r.text
+    assert isinstance(r.json(), list)
