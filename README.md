@@ -14,7 +14,7 @@ Welcome 👋 This is a **step-by-step, day-by-day training bootcamp** where we l
 
 Each day has its own folder under `days/`.
 
-- Start at [`days/day01`](./days/day01/README.md).
+- Start at [`days/day01`](./days/day1/README.md).
 - Each `README.md` explains:
   - Goals for the day
   - Step-by-step instructions
