@@ -172,6 +172,45 @@ async def test_graphql_secret_invalid_bearer():
     assert r.status_code == 200
     payload = r.json()
     assert "errors" in payload
+
+
+**GraphQL tests**
+Secure REST (valid key):
+
+curl -s -X POST "http://127.0.0.1:8000/secure/products" \
+  -H "X-API-Key: secret123" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Premium Mouse Pad","price":12.99}' | jq
+
+
+Secure REST (missing key):
+
+curl -s -X POST "http://127.0.0.1:8000/secure/products" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"No Auth","price":1.00}' | jq
+
+
+Secure GraphQL (valid bearer):
+
+curl -s -X POST "http://127.0.0.1:8000/graphql" \
+  -H "Authorization: Bearer bearer-abc-123" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"{ secretProducts { name price } }"}' | jq
+
+
+Secure GraphQL (invalid bearer):
+
+curl -s -X POST "http://127.0.0.1:8000/graphql" \
+  -H "Authorization: Bearer nope" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"{ secretProducts { name price } }"}' | jq
+
+
+Run tests:
+
+pytest -q
+
+    
 ```
 
 ---

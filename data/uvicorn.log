@@ -1,10 +1,512 @@
 INFO:     Will watch for changes in these directories: ['/workspaces/python-testing-bootcamp']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [10601] using WatchFiles
-INFO:     Started server process [10614]
+INFO:     Started reloader process [20005] using WatchFiles
+INFO:     Started server process [20027]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     108.65.114.113:0 - "GET / HTTP/1.1" 200 OK
-INFO:     108.65.114.113:0 - "GET /graphql HTTP/1.1" 200 OK
 INFO:     108.65.114.113:0 - "POST /graphql HTTP/1.1" 200 OK
-INFO:     108.65.114.113:0 - "POST /graphql HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20027]
+INFO:     Started server process [20401]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20401]
+INFO:     Started server process [20421]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20421]
+Process SpawnProcess-4:
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 67, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 71, in serve
+    await self._serve(sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 78, in _serve
+    config.load()
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/config.py", line 436, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 990, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1128, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1058, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 1
+    Got it 👍 — let’s split **Day 15** into individual files so you can copy and paste them directly.
+           ^
+SyntaxError: invalid character '👍' (U+1F44D)
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Started server process [28843]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28843]
+INFO:     Started server process [28948]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28948]
+INFO:     Started server process [28957]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28957]
+INFO:     Started server process [28977]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28977]
+INFO:     Started server process [29032]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29032]
+INFO:     Started server process [29142]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29142]
+Process SpawnProcess-11:
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 67, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 71, in serve
+    await self._serve(sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 78, in _serve
+    config.load()
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/config.py", line 436, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 990, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1128, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1058, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 14
+    from fastapi.security impo
+                          ^^^^
+SyntaxError: invalid syntax
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+Process SpawnProcess-12:
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 67, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 71, in serve
+    await self._serve(sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 78, in _serve
+    config.load()
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/config.py", line 436, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 990, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1128, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1058, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 14
+    from fastapi.security impoR
+                          ^^^^^
+SyntaxError: invalid syntax
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+Process SpawnProcess-13:
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/local/python/3.12.1/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 67, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 71, in serve
+    await self._serve(sockets)
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/server.py", line 78, in _serve
+    config.load()
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/config.py", line 436, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 990, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1128, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1058, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 14
+    from fastapi.security import
+                                ^
+SyntaxError: invalid syntax
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Started server process [29337]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29337]
+INFO:     Started server process [29745]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29745]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [29789]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29789]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [31457]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31457]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [31502]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31502]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [31983]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31983]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Started server process [32560]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [32567]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32567]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [32580]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32580]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [32619]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32619]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [33513]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33513]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [33590]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33590]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [33613]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'src/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33613]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [34013]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'tests/test_graphql_api.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [34013]
+(trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+INFO:     Started server process [35075]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56042 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56046 - "POST /token HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56062 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56066 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56078 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56094 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56100 - "POST /token HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56106 - "POST /products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56120 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56126 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56140 - "POST /graphql HTTP/1.1" 200 OK
+Forbidden: Invalid Bearer token
+
+GraphQL request:1:3
+1 | { secretProducts { name price } }
+  |   ^
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/graphql/execution/execute.py", line 530, in await_result
+    return_type, field_nodes, info, path, await result
+                                          ^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/strawberry/schema/schema_converter.py", line 788, in _async_resolver
+    return await await_maybe(
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/strawberry/utils/await_maybe.py", line 13, in await_maybe
+    return await value
+           ^^^^^^^^^^^
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 320, in secret_products
+    extract_valid_bearer_or_raise(request)
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 124, in extract_valid_bearer_or_raise
+    raise Exception("Forbidden: Invalid Bearer token")
+Exception: Forbidden: Invalid Bearer token
+INFO:     127.0.0.1:56154 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56158 - "GET /products?limit=5&skip=0&sort_by=price&order=desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56164 - "POST /secure/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56168 - "POST /secure/products HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:54726 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54736 - "POST /token HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54744 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54754 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54766 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54776 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54784 - "POST /token HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54798 - "POST /products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54814 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54830 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54840 - "POST /graphql HTTP/1.1" 200 OK
+Forbidden: Invalid Bearer token
+
+GraphQL request:1:3
+1 | { secretProducts { name price } }
+  |   ^
+Traceback (most recent call last):
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/graphql/execution/execute.py", line 530, in await_result
+    return_type, field_nodes, info, path, await result
+                                          ^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/strawberry/schema/schema_converter.py", line 788, in _async_resolver
+    return await await_maybe(
+           ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/site-packages/strawberry/utils/await_maybe.py", line 13, in await_maybe
+    return await value
+           ^^^^^^^^^^^
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 320, in secret_products
+    extract_valid_bearer_or_raise(request)
+  File "/workspaces/python-testing-bootcamp/src/main.py", line 124, in extract_valid_bearer_or_raise
+    raise Exception("Forbidden: Invalid Bearer token")
+Exception: Forbidden: Invalid Bearer token
+INFO:     127.0.0.1:54850 - "POST /graphql HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54866 - "GET /products?limit=5&skip=0&sort_by=price&order=desc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54878 - "POST /secure/products HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54882 - "POST /secure/products HTTP/1.1" 403 Forbidden

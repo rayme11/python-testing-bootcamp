@@ -18,3 +18,7 @@ pytest-cov>=5.0
 # Utilities
 requests>=2.31
 faker>=24.0
+
+python-jose[cryptography]
+passlib[bcrypt]
+pytest-cov
