@@ -10,8 +10,10 @@ from fastapi.security import APIKeyHeader, HTTPBearer, HTTPAuthorizationCredenti
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from fastapi import Depends, status
+from fastapi import Depends, status, Security
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from pydantic import BaseModel
+
 
 SECRET_KEY = "super-secret-key"  # demo only; load from env in real apps
 ALGORITHM = "HS256"
@@ -42,23 +44,29 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> dict:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate token",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+
+
+def has_role(user: dict | None, required: str) -> bool:
+    if not user:
+        return False
+    return user.get("role") == required
+
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+    # Reuse your Day 16 SECRET_KEY/ALGORITHM
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str | None = payload.get("sub")
-        if username is None:
-            raise credentials_exception
+        # payload contains { sub, role, exp }
+        return payload
     except JWTError:
-        raise credentials_exception
-    user = fake_users_db.get(username)
-    if user is None:
-        raise credentials_exception
-    return {"username": user["username"]}
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
+def require_role(required_role: str):
+    async def _inner(user: dict = Depends(get_current_user)):
+        if not has_role(user, required_role):
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+        return user
+    return _inner
+
 
 
 
@@ -89,10 +97,12 @@ def ensure_mongo(request: Request):
 # ------------------------------------------------------------------------------
 # Models & constants
 # ------------------------------------------------------------------------------
-class Product(BaseModel):
-    name: str = Field(..., min_length=2, max_length=80)
-    price: float = Field(..., ge=0.0)
+from pydantic import BaseModel, Field
 
+class Product(BaseModel):
+    name: str = Field(min_length=1, max_length=80)
+    price: float = Field(gt=0, lt=100000)
+    
 SORTABLE_FIELDS = {"name", "price"}
 
 # Simple demo auth (in real life, use env vars / a DB / JWT etc.)
@@ -240,6 +250,48 @@ def _require_bearer_username_from_request(request: Request) -> str:
         return username
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
+    
+
+# ------------------------------------------------------------------------------
+# Admin REST Endpoints (secured via role-based auth)
+# ------------------------------------------------------------------------------
+
+class AdminProduct(BaseModel):
+    name: str
+    price: float
+
+@app.post("/admin/products", status_code=201)
+async def admin_create_product(product: AdminProduct, request: Request, user=Depends(require_role("admin"))):
+    col = ensure_mongo(request)
+    result = await col.insert_one(product.model_dump())
+    return {"message": "Product added", "id": str(result.inserted_id)}
+
+@app.put("/admin/products/{pid}")
+async def admin_update_product(pid: str, product: AdminProduct, request: Request, user=Depends(require_role("admin"))):
+    col = ensure_mongo(request)
+    try:
+        oid = ObjectId(pid)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid product ID")
+
+    res = await col.update_one({"_id": oid}, {"$set": product.model_dump()})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return {"message": "Product updated"}
+
+@app.delete("/admin/products/{pid}", status_code=204)
+async def admin_delete_product(pid: str, request: Request, user=Depends(require_role("admin"))):
+    col = ensure_mongo(request)
+    try:
+        oid = ObjectId(pid)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid product ID")
+
+    res = await col.delete_one({"_id": oid})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return
+
 
 
 # ------------------------------------------------------------------------------
@@ -255,10 +307,13 @@ class ProductInput:
     name: str
     price: float
 
+from typing import Optional
+
 @strawberry.type
 class MutationResult:
     success: bool
     message: str
+    id: Optional[str] = None
 
 async def get_context(request: Request):
     # strawberry will pass this to resolvers as info.context["request"]
@@ -330,39 +385,44 @@ class Query:
 class Mutation:
     @strawberry.mutation
     async def add_product(self, info, product: ProductInput) -> MutationResult:
-        request = info.context["request"]
-        user = _require_bearer_username_from_request(request)
-        col = ensure_mongo(request)
-        await col.insert_one({"name": product.name, "price": float(product.price)})
-        return MutationResult(success=True, message=f"Product '{product.name}' added by {user}.")
+        user = info.context.get("user")
+        if not has_role(user, "admin"):
+            return MutationResult(success=False, message="Forbidden: admin only")
+        col = ensure_mongo(info.context["request"])
+        result = await col.insert_one({"name": product.name, "price": float(product.price)})
+        return MutationResult(success=True, message="Product added", id=str(result.inserted_id))
 
     @strawberry.mutation
     async def update_product(self, info, id: str, product: ProductInput) -> MutationResult:
-        request = info.context["request"]
-        _ = _require_bearer_username_from_request(request)
-        col = ensure_mongo(request)
+        user = info.context.get("user")
+        if not has_role(user, "admin"):
+            return MutationResult(success=False, message="Forbidden: admin only")
+        col = ensure_mongo(info.context["request"])
         try:
             oid = ObjectId(id)
         except Exception:
-            return MutationResult(success=False, message="Invalid product ID.")
-        result = await col.update_one({"_id": oid}, {"$set": {"name": product.name, "price": float(product.price)}})
-        if result.matched_count == 0:
-            return MutationResult(success=False, message="Product not found.")
-        return MutationResult(success=True, message="Product updated.")
+            return MutationResult(success=False, message="Invalid product ID")
+
+        res = await col.update_one({"_id": oid}, {"$set": {"name": product.name, "price": float(product.price)}})
+        if res.matched_count == 0:
+            return MutationResult(success=False, message="Product not found")
+        return MutationResult(success=True, message="Product updated", id=id)
 
     @strawberry.mutation
     async def delete_product(self, info, id: str) -> MutationResult:
-        request = info.context["request"]
-        _ = _require_bearer_username_from_request(request)
-        col = ensure_mongo(request)
+        user = info.context.get("user")
+        if not has_role(user, "admin"):
+            return MutationResult(success=False, message="Forbidden: admin only")
+        col = ensure_mongo(info.context["request"])
         try:
             oid = ObjectId(id)
         except Exception:
-            return MutationResult(success=False, message="Invalid product ID.")
-        result = await col.delete_one({"_id": oid})
-        if result.deleted_count == 0:
-            return MutationResult(success=False, message="Product not found.")
-        return MutationResult(success=True, message="Product deleted.")
+            return MutationResult(success=False, message="Invalid product ID")
+
+        res = await col.delete_one({"_id": oid})
+        if res.deleted_count == 0:
+            return MutationResult(success=False, message="Product not found")
+        return MutationResult(success=True, message="Product deleted", id=id)
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)

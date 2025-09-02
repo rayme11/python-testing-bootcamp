@@ -22,3 +22,5 @@ faker>=24.0
 python-jose[cryptography]
 passlib[bcrypt]
 pytest-cov
+
+hypothesis
